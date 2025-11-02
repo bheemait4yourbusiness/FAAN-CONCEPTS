@@ -40,4 +40,23 @@ Constraints:
  * @param {number[]} nums
  * @return {number[]}
  */
-var findMissingElements = function (nums) {};
+var findMissingElements = function (nums) {
+  let min = nums[0];
+  let max = nums[0];
+  for (const num of nums) {
+    min = Math.min(min, num);
+    max = Math.max(max, num);
+  }
+  const seen = [];
+  for (const num of nums) {
+    seen[num] = (seen[num] ?? 0) + 1;
+  }
+  const res = [];
+  for (let i = min; i <= max; i++) {
+    if (!seen[i]) {
+      res.push(i);
+    }
+  }
+
+  return res;
+};

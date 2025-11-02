@@ -45,4 +45,17 @@ Constraints:
  * @param {number[]} nums
  * @return {number}
  */
-var maxProduct = function (nums) {};
+var maxProduct = function (nums) {
+  let a = 0;
+  let b = 0;
+  for (const num of nums) {
+    const dup = Math.abs(num);
+    if (dup >= a) {
+      b = a;
+      a = dup;
+    } else if (dup > b) {
+      b = dup;
+    }
+  }
+  return a * b * 100000;
+};
