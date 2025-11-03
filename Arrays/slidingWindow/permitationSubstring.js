@@ -26,4 +26,45 @@ s1 and s2 consist of lowercase English letters.
  * @param {string} s2
  * @return {boolean}
  */
-var checkInclusion = function (s1, s2) {};
+var checkInclusion = function (s1, s2) {
+  // 1.create frequencyMAp for S1
+  let charsArray = new Array(26).fill(0);
+  let uniqueChars = 0;
+  let asciA = "a".charCodeAt(0);
+  for (let char of s1) {
+    const currChar = char.charCodeAt(0) - asciA;
+    charsArray[currChar]++;
+    if (charsArray[currChar] === 1) {
+      uniqueChars++;
+    }
+  }
+  windowSize = s1.length;
+  // 2.slide Window on S2 with length s1
+  for (let i = 0; i <= s2.length; i++) {
+    const currChar = s2.charCodeAt(i) - asciA;
+    charsArray[currChar]--;
+
+    if (charsArray[currChar] === 0) {
+      uniqueChars--;
+    }
+    // change window elements
+    if (i >= windowSize) {
+      const leftChar = s2.charCodeAt(i - windowSize) - asciA;
+      charsArray[leftChar]++;
+      if (charsArray[leftChar] === 1) {
+        uniqueChars++;
+      }
+    }
+
+    if (uniqueChars === 0) {
+      return true;
+    }
+  }
+  console.log(`UniqueChars->${uniqueChars}`);
+
+  return false;
+};
+
+const res1 = checkInclusion("ab", "eidbaooo");
+const res2 = checkInclusion("ab", "eidboaoo");
+console.log(`Result->${res1},${res2}`);
