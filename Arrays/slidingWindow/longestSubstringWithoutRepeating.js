@@ -33,7 +33,25 @@ s consists of English letters, digits, symbols and spaces.
  * @param {string} s
  * @return {number}
  */
-var lengthOfLongestSubstring = function (s) {};
-const res1 = lengthOfLongestSubstring("bbbbb");
+var lengthOfLongestSubstring = function (s) {
+  let leftPointer = 0;
+  let rightPointer = 0;
+  let uniqueString = 0;
+  let freqCharsMap = new Map();
+  for (rightPointer; rightPointer < s.length; rightPointer++) {
+    const curr = s[rightPointer];
+    freqCharsMap.set(curr, (freqCharsMap.get(curr) || 0) + 1);
+    // 2.check for duplicates
+    while (freqCharsMap.get(curr) > 1) {
+      const leftChar = s[leftPointer];
+      freqCharsMap.set(leftChar, freqCharsMap.get(leftChar) - 1);
+      leftPointer++;
+    }
+    uniqueString = Math.max(uniqueString, rightPointer - leftPointer + 1);
+  }
+  return uniqueString;
+};
+// const res1 = lengthOfLongestSubstring("bbbbb");
+const res1 = lengthOfLongestSubstring("eidbaooo");
 const res2 = lengthOfLongestSubstring("pwwkew");
 console.log(`Result->${res1},${res2}`);
