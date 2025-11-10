@@ -49,14 +49,17 @@ function maxSlidingWindow(nums, k) {
     while (deque.length && deque[0] <= i - k) {
       deque.shift();
     }
+    console.log(`queueRemove->${deque}`);
 
     // remove smaller elements
     while (deque.length && nums[deque[deque.length - 1]] < nums[i]) {
       deque.pop();
     }
+    console.log(`queuePOP->${deque}`);
 
     // add current element index
     deque.push(i);
+    console.log(`queueADD->${deque}`);
 
     // record max (front of deque) after first k elements
     if (i >= k - 1) {
@@ -66,5 +69,5 @@ function maxSlidingWindow(nums, k) {
 
   return result;
 }
-const res1 = maxSlidingWindow([1, 3, 2, -1, -3, 6, 5, 3, 6, 7, 8], 3);
+const res1 = maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7, 8], 3);
 console.log("Result->", res1);
