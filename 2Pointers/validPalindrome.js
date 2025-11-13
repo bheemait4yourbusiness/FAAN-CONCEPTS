@@ -38,4 +38,18 @@ s consists only of printable ASCII characters.
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function (s) {};
+var isPalindrome = function (s) {
+  s = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  leftPointer = 0;
+  rightPointer = s.length - 1;
+  while (leftPointer < rightPointer) {
+    if (s[leftPointer] !== s[rightPointer]) return false;
+    leftPointer++;
+    rightPointer--;
+  }
+  return true;
+};
+const res1 = isPalindrome("A man, a plan, a canal: Panama");
+const res2 = isPalindrome("race a car");
+const res3 = isPalindrome("");
+console.log(`Result->${res1},${res2},${res3}`);
