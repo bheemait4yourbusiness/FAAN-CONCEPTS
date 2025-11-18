@@ -38,7 +38,7 @@ Example 3:
 Input: nums = [1,1,5]
 Output: [1,5,1]
  
-
+nextPermutation
 Constraints:
 1 <= nums.length <= 100
 0 <= nums[i] <= 100
@@ -47,4 +47,77 @@ Constraints:
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var nextPermutation = function (nums) {};
+var nextPermutation = function (nums) {
+  // 1.find breakingElemtn
+  const length = nums.length;
+  let current = length - 2;
+  while (current >= 0 && nums[current] >= nums[current + 1]) {
+    current--;
+  }
+
+  // 2.swap element with greater value
+  if (current >= 0) {
+    for (let swap = length - 1; swap > current; swap--) {
+      if (nums[swap] > nums[current]) {
+        [nums[current], nums[swap]] = [nums[swap], nums[current]];
+        break;
+      }
+    }
+  }
+  // 3.reverse the rest elements
+  let leftPointer = current + 1;
+  let rightPointer = length - 1;
+  while (leftPointer < rightPointer) {
+    [nums[leftPointer], nums[rightPointer]] = [
+      nums[rightPointer],
+      nums[leftPointer],
+    ];
+    leftPointer++;
+    rightPointer--;
+  }
+  return nums;
+};
+
+/*
+
+function nextPermutation(nums) {
+  const length = nums.length;
+
+  // Step 1: Find the rightmost position where nums[i] < nums[i + 1]
+  // This is the "pivot" position where we need to make a change
+  let pivotIndex = length - 2;
+  while (pivotIndex >= 0 && nums[pivotIndex] >= nums[pivotIndex + 1]) {
+    pivotIndex--;
+  }
+
+  // Step 2: If a valid pivot exists, find the smallest number to its right
+  // that is still greater than the pivot, then swap them
+  if (pivotIndex >= 0) {
+    for (let swapIndex = length - 1; swapIndex > pivotIndex; swapIndex--) {
+      if (nums[swapIndex] > nums[pivotIndex]) {
+        // Swap the pivot with the found element
+        [nums[pivotIndex], nums[swapIndex]] = [
+          nums[swapIndex],
+          nums[pivotIndex],
+        ];
+        break;
+      }
+    }
+  }
+
+  // Step 3: Reverse the suffix starting from pivotIndex + 1
+  // This ensures we get the next smallest permutation
+  let left = pivotIndex + 1;
+  let right = length - 1;
+  while (left < right) {
+    [nums[left], nums[right]] = [nums[right], nums[left]];
+    left++;
+    right--;
+  }
+  return nums;
+}
+  */
+const res1 = nextPermutation([1, 2, 3]);
+const res2 = nextPermutation([3, 2, 1]);
+const res3 = nextPermutation([1, 1, 5]);
+console.log(`Resutl-->${res1}\n ${res2}\n ${res3}`);
